@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda de Contatos</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="mb-4">Agenda de Contatos</h1>
+    <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addContactModal">Adicionar Contato</button>
+    
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col">E-mail</th>
+          <th scope="col">Telefone</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody id="contactsTableBody">
+        <!-- Os contatos serão inseridos aqui dinamicamente -->
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal fade" id="addContactModal" tabindex="-1" role="dialog" aria-labelledby="addContactModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addContactModalLabel">Adicionar Contato</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="addContactForm">
+            <div class="form-group">
+              <label for="inputName">Nome</label>
+              <input type="text" class="form-control" id="inputName">
+            </div>
+            <div class="form-group">
+              <label for="inputEmail">E-mail</label>
+              <input type="email" class="form-control" id="inputEmail">
+            </div>
+            <div class="form-group">
+              <label for="inputPhone">Telefone</label>
+              <input type="text" class="form-control" id="inputPhone">
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>
