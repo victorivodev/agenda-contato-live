@@ -29,8 +29,37 @@ function getAllContacts() {
 }
 
 // Função para buscar contatos pelo nome
-function getContactByName(name) {
-    connection.query(`SELECT * FROM contatos WHERE nome LIKE '${name}';`, (err, results) => {
+function getContactByName(nome) {
+    connection.query(`SELECT * FROM contatos WHERE nome LIKE '${nome}';`, (err, results) => {
+        if (err) {
+            console.error('Erro ao executar a consulta:', err);
+            return;
+        }
+        console.log(results);
+    });
+}
+
+function insertContact(nome, sobrenome, email, telefone) {
+    connection.query(`INSERT INTO contatos (nome, sobrenome, email, telefone) VALUES (
+        '${nome}',
+        '${sobrenome}',
+        '${email}',
+        '${telefone}'
+    )`, (err, results) => {
+        if (err) {
+            console.error('Erro ao executar a consulta:', err);
+            return;
+        }
+        console.log(results);
+    });
+}
+
+function alterContact(nome, sobrenome, email, telefone){
+    connection.query(`UPDATE contatos set
+            nome = '${nome}',
+            sobrenome ='${sobrenome}',
+            email = '${email}',
+            telefone = '${telefone}'`, (err, results) => {
         if (err) {
             console.error('Erro ao executar a consulta:', err);
             return;
@@ -41,5 +70,6 @@ function getContactByName(name) {
 
 module.exports = {
     getAllContacts,
-    getContactByName
+    getContactByName,
+    insertContact
 }
