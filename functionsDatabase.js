@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 
-// Crie a conexão com o banco de dados
+// Criando conexão com o banco de dados
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
     database: 'agenda_contato'
 });
 
-// Conecte-se ao banco de dados
+// Conectando ao banco de dados
 connection.connect((err) => {
     if (err) {
         console.error('Erro ao conectar ao banco de dados:', err);
@@ -39,7 +39,8 @@ function getContactByName(nome) {
     });
 }
 
-function insertContact(nome, sobrenome, email, telefone) {
+// Função para criar contato na base
+function createContact(nome, sobrenome, email, telefone) {
     connection.query(`INSERT INTO contatos (nome, sobrenome, email, telefone) VALUES (
         '${nome}',
         '${sobrenome}',
@@ -54,7 +55,19 @@ function insertContact(nome, sobrenome, email, telefone) {
     });
 }
 
+//Função para alterar dados de contato
 function alterContact(nome, sobrenome, email, telefone){
+    if (nome = '') {
+        return 'Nome não atualizado'
+    } else {
+        connection.query(`UPDATE CONTATOS set nome = ${nome}`), (err, results) => {
+            if(err) {
+                return 'Erro ao atualizar nome'
+            } 
+            return;
+        }
+    }
+    
     connection.query(`UPDATE contatos set
             nome = '${nome}',
             sobrenome ='${sobrenome}',
@@ -68,8 +81,15 @@ function alterContact(nome, sobrenome, email, telefone){
     });
 }
 
+function deleteContact(id){
+    connection.query(`DELETE FROM contatos
+    WHERE id = ${id}`)
+}
+
 module.exports = {
     getAllContacts,
     getContactByName,
-    insertContact
+    createContact,
+    deleteContact,
+    alterContact
 }

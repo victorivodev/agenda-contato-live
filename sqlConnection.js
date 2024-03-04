@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
+const { getAllContacts, getContactByName } = require('./functionsDatabase');
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -15,13 +16,6 @@ connection.connect((err) => {
     return;
   }
   console.log('Conexão bem-sucedida ao banco de dados.');
-  connection.query('SELECT * FROM contatos', (err, results) => {
-    if (err) {
-      console.error('Erro ao executar a consulta:', err);
-      return;
-    }
-	console.log(results)
-  });
 });
 
 const port = 3000;
