@@ -1,0 +1,38 @@
+<h1>Adicionar Contatos</h1>
+<a href="/"><button class="btn btn-sm btn-info mr-2">Voltar para a tela inicial</button></a>
+<form action="/cadContato" method="POST">
+  <div class="form-group">
+    <label for="nome">Nome do Contato</label>
+    <input type="text" class="form-control" name="nome" placeholder="Insira o nome do contato">
+  </div>
+  <div class="form-group">
+    <label for="sobrenome">Sobrenome do Contato</label>
+    <input type="text" class="form-control" name="sobrenome" placeholder="Insira o nome do contato">
+  </div>
+    <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" name="email" placeholder="Insira seu e-mail">
+    <small id="emailHelp" class="form-text text-muted">Nós não utilizaremos seu e-mail para quaisquer envios indesejados</small>
+  </div>
+  <div class="form-group">
+    <label for="telefone">Telefone do Contato</label>
+    <input type="number" class="form-control"  name="telefone" placeholder="Número de telefone">
+  </div>
+  <button type="submit" class="btn btn-primary">Cadastrar</button>
+</form>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+              Swal.fire({
+                title: 'Contato Cadastrado!',
+                text: 'Seu contato foi cadastrado com sucesso!',
+                icon: 'success'
+            }).then(function() {
+                document.querySelector('form').submit();
+            });
+        });
+    });
+</script>
+
