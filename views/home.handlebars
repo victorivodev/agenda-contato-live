@@ -19,7 +19,9 @@
         <td>{{email}}</td>
         <td>{{telefone}}</td>
         <td>
-        <button class="btn btn-sm btn-info mr-2">Editar</button>
+        <form id="editar" action="/editContato/{{id}}" method="POST">
+           <button class="btn btn-sm btn-info mr-2 edit-btn">Editar</button>
+        </form>
         <form id="excluir" action="/delContato/{{id}}" method="GET">
            <button type="submit" class="btn btn-sm btn-danger mr-2">Excluir</button>
         </form>
@@ -31,9 +33,12 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelector('#excluir button[type="submit"]').addEventListener('click', function(event) {
+document.addEventListener('DOMContentLoaded', function() {
+    const submitButtons = document.querySelectorAll('#excluir button[type="submit"]');
+    submitButtons.forEach(function(button) {
+        button.addEventListener('click', function(event) {
             event.preventDefault();
+            const form = button.parentElement;
             Swal.fire({
                 title: "Você tem certeza disso?",
                 showDenyButton: true,
@@ -44,7 +49,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire("Sucesso ao excluir contato", "", "success").then(function(){
-                          document.querySelector('#excluir').submit();
+                        form.submit();
                     })
                 } else if (result.isDenied) {
                     Swal.fire("Alterações não realizadas", "", "info");
@@ -52,4 +57,151 @@
             });
         });
     });
+});
+
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const editButtons = document.querySelectorAll('.edit-btn');
+    editButtons.forEach(function(button) {
+      button.addEventListener('click', function(event) {
+        event.preventDefault(); // Evita o envio do formulário ao clicar no botão de edição
+        const form = button.parentElement; // Obtém o formulário pai do botão de edição
+        Swal.fire({
+          title: 'Editar Contato',
+          html:
+            '<input id="edit-nome" class="swal2-input" placeholder="Nome">' +
+            '<input id="edit-sobrenome" class="swal2-input" placeholder="Sobrenome">' +
+            '<input id="edit-email" class="swal2-input" placeholder="E-mail">' +
+            '<input id="edit-telefone" class="swal2-input" placeholder="Telefone">',
+          showCancelButton: true,
+          confirmButtonText: 'Salvar',
+          cancelButtonText: 'Cancelar',
+          preConfirm: () => {
+            // Aqui você pode capturar os dados do formulário de edição
+            const nome = document.getElementById('edit-nome').value;
+            const sobrenome = document.getElementById('edit-sobrenome').value;
+            const email = document.getElementById('edit-email').value;
+            const telefone = document.getElementById('edit-telefone').value;
+            return { nome: nome, sobrenome: sobrenome, email: email, telefone: telefone };
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Aqui você pode enviar os dados do formulário de edição para o servidor
+            const formData = result.value;
+            console.log('Dados do formulário de edição:', formData);
+            
+            // Faz uma requisição POST para a rota de edição
+            const id = form.action.split('/').pop(); // Obtém o ID do contato a partir da URL da ação do formulário
+            fetch('/editContato/' + id, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(formData),
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Sucesso',
+                  text: 'Contato atualizado com sucesso!',
+                }).then(function(){
+                    window.location.href = '/';
+                });
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Erro',
+                  text: data.error,
+                });
+              }
+            })
+            .catch((error) => {
+              console.error('Erro:', error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Ocorreu um erro ao atualizar o contato.',
+              });
+            });
+          }
+        });
+      });
+    });
+});
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const editButtons = document.querySelectorAll('.edit-btn');
+    editButtons.forEach(function(button) {
+      button.addEventListener('click', function(event) {
+        event.preventDefault(); // Evita o envio do formulário ao clicar no botão de edição
+        const form = button.parentElement; // Obtém o formulário pai do botão de edição
+        Swal.fire({
+          title: 'Editar Contato',
+          html:
+            '<input id="edit-nome" class="swal2-input" placeholder="Nome">' +
+            '<input id="edit-sobrenome" class="swal2-input" placeholder="Sobrenome">' +
+            '<input id="edit-email" class="swal2-input" placeholder="E-mail">' +
+            '<input id="edit-telefone" class="swal2-input" placeholder="Telefone">',
+          showCancelButton: true,
+          confirmButtonText: 'Salvar',
+          cancelButtonText: 'Cancelar',
+          preConfirm: () => {
+            // Aqui você pode capturar os dados do formulário de edição
+            const nome = document.getElementById('edit-nome').value;
+            const sobrenome = document.getElementById('edit-sobrenome').value;
+            const email = document.getElementById('edit-email').value;
+            const telefone = document.getElementById('edit-telefone').value;
+            return { nome: nome, sobrenome: sobrenome, email: email, telefone: telefone };
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Aqui você pode enviar os dados do formulário de edição para o servidor
+            const formData = result.value;
+            console.log('Dados do formulário de edição:', formData);
+            
+            // Faz uma requisição POST para a rota de edição
+            const id = form.action.split('/').pop(); // Obtém o ID do contato a partir da URL da ação do formulário
+            fetch('/editContato/' + id, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(formData),
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Sucesso',
+                  text: 'Contato atualizado com sucesso!',
+                }).then(function(){
+                    window.location.href = '/';
+                });
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Erro',
+                  text: data.error,
+                });
+              }
+            })
+            .catch((error) => {
+              console.error('Erro:', error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Ocorreu um erro ao atualizar o contato.',
+              });
+            });
+          }
+        });
+      });
+    });
+});
 </script>

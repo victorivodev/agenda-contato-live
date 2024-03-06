@@ -1,4 +1,4 @@
-const database = require('./database');
+const database = require('../database/database');
 
 const Contato = database.sequelize.define('contatos', {
     id: {

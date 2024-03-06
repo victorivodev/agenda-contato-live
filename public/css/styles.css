@@ -1,0 +1,77 @@
+body {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+h1 {
+    color: #444;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.form-add-contato {
+    /* Centraliza o formulário na tela */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /* Define a largura do formulário */
+    width: 50%; /* ou qualquer outra porcentagem ou valor fixo que você preferir */
+
+    /* Adiciona algum espaço ao redor do formulário */
+    padding: 20px;
+
+    /* Adiciona uma borda ao formulário */
+    border: 1px solid #ccc;
+}
+/* Centraliza o título na tela */
+.tituloAdd {
+    padding-top: 75px;
+    text-align: center;
+}
+
+/* Posiciona o botão no canto inferior direito e alinha com o formulário */
+.botao-voltar {
+    position: absolute;
+    right: 25%; /* Ajuste este valor para alinhar com o formulário */
+    bottom: 100px;
+}
